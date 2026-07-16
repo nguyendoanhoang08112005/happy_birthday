@@ -1,0 +1,6 @@
+{
+  "name": "Thiệp Sinh Nhật Tương Tác",
+  "description": "Website thiệp sinh nhật tương tác 3 màn hình lãng mạn, ấm áp với bánh kem vẽ bằng CSS, hộp quà 3D, hiệu ứng pháo hoa giấy và gửi điều ước qua EmailJS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
