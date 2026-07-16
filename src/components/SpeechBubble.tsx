@@ -15,9 +15,9 @@ export default function SpeechBubble({ text }: SpeechBubbleProps) {
           {text}
         </p>
       </div>
-      {/* Triangle pointer tail pointing down-left toward the mascot bear */}
-      <div className="absolute left-8 -bottom-3.5 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[12px] border-t-[#fffdf9] filter drop-shadow-[0_3px_0px_#3a040e]" />
-      <div className="absolute left-[30px] -bottom-[17px] w-0 h-0 border-l-[11px] border-l-transparent border-r-[11px] border-r-transparent border-t-[14px] border-t-[#3a040e] -z-10" />
+      {/* Triangle pointer tail pointing left toward the mascot bear */}
+      <div className="absolute -left-[11px] top-[60%] -translate-y-1/2 w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-r-[12px] border-r-[#fffdf9]" />
+      <div className="absolute -left-[14px] top-[60%] -translate-y-1/2 w-0 h-0 border-t-[9px] border-t-transparent border-b-[9px] border-b-transparent border-r-[15px] border-r-[#3a040e] -z-10" />
     </div>
   );
 }

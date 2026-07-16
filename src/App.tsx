@@ -15,6 +15,7 @@ import GreetingCard from "./components/GreetingCard";
 
 export default function App() {
   const [activeScreen, setActiveScreen] = useState<ActiveScreen>(ActiveScreen.CAKE);
+  const [isWishSent, setIsWishSent] = useState(false);
 
   return (
     <div className="w-full min-h-screen flex justify-center items-center bg-[#35020c] text-white relative overflow-hidden font-sans">
@@ -31,7 +32,7 @@ export default function App() {
       <div className="absolute bottom-1/3 right-1/10 w-1 h-1 bg-amber-200 rounded-full animate-sparkle" style={{ animationDelay: "0.5s" }} />
 
       {/* MOBILE CONTAINER (Max width 480px, responsive & centered) */}
-      <main className="w-full max-w-[480px] min-h-screen flex flex-col justify-between items-center py-10 px-6 z-10 relative">
+      <main className="w-full max-w-[480px] h-screen max-h-screen flex flex-col justify-between items-center py-4 px-6 z-10 relative overflow-hidden">
         
         {/* HEADER BRANDING */}
         <header className="w-full text-center select-none pt-4">
@@ -41,7 +42,7 @@ export default function App() {
         </header>
 
         {/* SCREEN ROUTER WITH SMOOTH TRANSITIONS */}
-        <div className="w-full flex flex-col items-center justify-center flex-grow my-6">
+        <div className="w-full flex flex-col items-center justify-center flex-grow my-2">
           <AnimatePresence mode="wait">
             
             {/* SCREEN 1: THE CAKE */}
@@ -54,11 +55,11 @@ export default function App() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="w-full flex flex-col items-center justify-center"
               >
-                <h1 className="font-script text-white text-6xl md:text-7xl text-center select-none tracking-wide drop-shadow-[0_2px_15px_rgba(251,113,133,0.55)] leading-tight mb-2">
+                <h1 className="font-script text-white text-5xl md:text-6xl text-center select-none tracking-wide drop-shadow-[0_2px_15px_rgba(251,113,133,0.55)] leading-tight mb-1">
                   Happy Birthday!
                 </h1>
                 
-                <p className="font-serif italic text-amber-200/80 text-sm md:text-base text-center mb-6 tracking-wide">
+                <p className="font-serif italic text-amber-200/80 text-xs md:text-sm text-center mb-4 tracking-wide">
                   Chúc Mừng Sinh Nhật
                 </p>
 
@@ -66,7 +67,7 @@ export default function App() {
                 <BirthdayCake onClick={() => setActiveScreen(ActiveScreen.GIFT)} />
 
                 {/* VISUAL GUIDE INSTRUCTION */}
-                <p className="mt-8 font-sans font-extrabold text-xs md:text-sm text-center text-rose-200/90 tracking-wide animate-pulse bg-rose-950/40 px-5 py-2.5 rounded-full border border-rose-800/30">
+                <p className="mt-4 font-sans font-extrabold text-xs md:text-sm text-center text-rose-200/90 tracking-wide animate-pulse bg-rose-950/40 px-5 py-2 rounded-full border border-rose-800/30">
                   👆 Chạm vào chiếc bánh để nhận điều bất ngờ!
                 </p>
               </motion.div>
@@ -103,12 +104,12 @@ export default function App() {
                   </div>
                   {/* Floating Speech Bubble */}
                   <div className="transform rotate-3 mb-2">
-                    <SpeechBubble text="Chúc mừng! Bạn có một điều ước... 🎉✨" />
+                    <SpeechBubble text={isWishSent ? "Yay! Điều ước đã bay vào vũ trụ rồi! 🚀✨" : "Chúc mừng! Bạn có một điều ước... 🎉✨"} />
                   </div>
                 </div>
 
                 {/* FILLABLE WISH CARD */}
-                <GreetingCard />
+                <GreetingCard onSuccess={() => setIsWishSent(true)} />
               </motion.div>
             )}
 
@@ -116,11 +117,7 @@ export default function App() {
         </div>
 
         {/* FOOTER */}
-        <footer className="w-full text-center select-none pb-2">
-          <p className="font-sans text-[10px] tracking-widest text-rose-300/40">
-            © 2026 Crafted with Love
-          </p>
-        </footer>
+        <footer className="w-full text-center select-none pb-2" />
 
       </main>
     </div>

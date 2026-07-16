@@ -26,7 +26,7 @@ export default function BirthdayCake({ onClick }: BirthdayCakeProps) {
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative flex flex-col items-center cursor-pointer select-none py-8 animate-pulseGlow transition-transform duration-300"
+      className="relative flex flex-col items-center cursor-pointer select-none py-2 animate-pulseGlow transition-transform duration-300"
       style={{ transform: isHovered ? "scale(1.03)" : "scale(1)" }}
     >
       {/* CANDLES CONTAINER (placed above top tier) */}
