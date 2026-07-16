@@ -120,10 +120,10 @@ export default function App() {
             {activeScreen === ActiveScreen.CAKE && (
               <motion.div
                 key="screen-cake"
-                initial={{ opacity: 0, scale: 0.95, y: 25 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: -25 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
                 className="w-full flex flex-col items-center justify-center"
               >
                 <h1 className="font-script text-white text-5xl md:text-6xl text-center select-none tracking-wide drop-shadow-[0_2px_15px_rgba(251,113,133,0.55)] leading-tight mb-1">
@@ -148,10 +148,10 @@ export default function App() {
             {activeScreen === ActiveScreen.GIFT && (
               <motion.div
                 key="screen-gift"
-                initial={{ opacity: 0, scale: 0.95, y: 25 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: -25 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
                 className="w-full flex flex-col items-center justify-center"
               >
                 <GiftBox onOpenComplete={() => setActiveScreen(ActiveScreen.CARD)} />
@@ -162,9 +162,9 @@ export default function App() {
             {activeScreen === ActiveScreen.CARD && (
               <motion.div
                 key="screen-card"
-                initial={{ opacity: 0, scale: 0.95, y: 25 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: "easeOut" }}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
                 className="w-full flex flex-col items-center"
               >
                 {/* MASCOT CHATTING ZONE */}
