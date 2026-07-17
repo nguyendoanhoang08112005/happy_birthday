@@ -73,6 +73,13 @@ export default function App() {
       const nextMute = !isMuted;
       audioRef.current.muted = nextMute;
       setIsMuted(nextMute);
+
+      // Fix: If unmuting and the audio is currently paused (due to tab switching), resume playing!
+      if (!nextMute && audioRef.current.paused) {
+        audioRef.current.play().catch((err) => {
+          console.log("Audio play failed on toggle:", err);
+        });
+      }
     }
   };
 
