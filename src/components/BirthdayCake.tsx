@@ -5,11 +5,14 @@
 
 import { useState } from "react";
 
+import { playBlowSound } from "../utils/audioSynth";
+
 interface BirthdayCakeProps {
   onClick: () => void;
+  shake?: boolean;
 }
 
-export default function BirthdayCake({ onClick }: BirthdayCakeProps) {
+export default function BirthdayCake({ onClick, shake = false }: BirthdayCakeProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   // Generate candle positions
@@ -23,10 +26,16 @@ export default function BirthdayCake({ onClick }: BirthdayCakeProps) {
 
   return (
     <div
-      onClick={onClick}
+      onClick={(e) => {
+        e.stopPropagation();
+        playBlowSound();
+        onClick();
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative flex flex-col items-center cursor-pointer select-none py-2 animate-pulseGlow transition-transform duration-300"
+      className={`relative flex flex-col items-center cursor-pointer select-none py-2 animate-pulseGlow transition-transform duration-300 ${
+        shake ? "animate-shake" : ""
+      }`}
       style={{ transform: isHovered ? "scale(1.03)" : "scale(1)" }}
     >
       {/* CANDLES CONTAINER (placed above top tier) */}

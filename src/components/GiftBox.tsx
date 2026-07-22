@@ -3,24 +3,29 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from "react";
+import React, { useState } from "react";
 import confetti from "canvas-confetti";
+
+import { playJiggleSound, playOpenSound } from "../utils/audioSynth";
 
 interface GiftBoxProps {
   onOpenComplete: () => void;
+  shake?: boolean;
 }
 
-export default function GiftBox({ onOpenComplete }: GiftBoxProps) {
+export default function GiftBox({ onOpenComplete, shake = false }: GiftBoxProps) {
   const [clickCount, setClickCount] = useState<number>(0);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
-  const handleBoxClick = () => {
+  const handleBoxClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (isAnimating) return;
 
     if (clickCount === 0) {
       // First click: Jiggle animation
       setIsAnimating(true);
       setClickCount(1);
+      playJiggleSound();
       setTimeout(() => {
         setIsAnimating(false);
       }, 600);
@@ -28,6 +33,7 @@ export default function GiftBox({ onOpenComplete }: GiftBoxProps) {
       // Second click: Open!
       setIsAnimating(true);
       setClickCount(2);
+      playOpenSound();
       
       // Burst confetti
       triggerConfettiShow();
@@ -102,13 +108,12 @@ export default function GiftBox({ onOpenComplete }: GiftBoxProps) {
         <div className="absolute left-1/2 -bottom-[20px] -translate-x-1/2 w-0 h-0 border-l-[16px] border-l-transparent border-r-[16px] border-r-transparent border-t-[18px] border-t-[#3a040e] -z-10" />
       </div>
 
-      {/* GIFT BOX WRAPPER */}
       <div
         onClick={handleBoxClick}
         className={`relative w-full max-w-[360px] h-[360px] flex items-center justify-center cursor-pointer group transition-all duration-300 ${
           clickCount < 2 ? "hover:scale-105" : ""
         } ${
-          isAnimating && clickCount === 1 ? "animate-shake" : ""
+          (isAnimating && clickCount === 1) || (shake && clickCount < 2) ? "animate-shake" : ""
         }`}
       >
         {/* AMBIENT BACKGROUND GLOW (SPOTLIGHT EFFECT) */}

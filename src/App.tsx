@@ -12,11 +12,14 @@ import GiftBox from "./components/GiftBox";
 import MascotBear from "./components/MascotBear";
 import SpeechBubble from "./components/SpeechBubble";
 import GreetingCard from "./components/GreetingCard";
+import { playMissSound } from "./utils/audioSynth";
 
 export default function App() {
   const [activeScreen, setActiveScreen] = useState<ActiveScreen>(ActiveScreen.CAKE);
   const [isWishSent, setIsWishSent] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [shakeCake, setShakeCake] = useState(false);
+  const [shakeBox, setShakeBox] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const isMutedRef = useRef(isMuted);
 
@@ -83,8 +86,31 @@ export default function App() {
     }
   };
 
+  const handleScreen1Click = () => {
+    playMissSound();
+    setShakeCake(true);
+    setTimeout(() => setShakeCake(false), 500);
+  };
+
+  const handleScreen2Click = () => {
+    playMissSound();
+    setShakeBox(true);
+    setTimeout(() => setShakeBox(false), 500);
+  };
+
+  const handleGlobalClick = () => {
+    if (activeScreen === ActiveScreen.CAKE) {
+      handleScreen1Click();
+    } else if (activeScreen === ActiveScreen.GIFT) {
+      handleScreen2Click();
+    }
+  };
+
   return (
-    <div className="w-full min-h-dvh flex justify-center items-center bg-[#35020c] text-white relative overflow-hidden font-sans">
+    <div
+      onClick={handleGlobalClick}
+      className="w-full min-h-dvh flex justify-center items-center bg-[#35020c] text-white relative overflow-hidden font-sans"
+    >
       {/* ROYAL BURGUNDY GRADIENT BACKDROP */}
       <div className="absolute inset-0 bg-radial from-[#5c0a1e] via-[#2f010a] to-[#120003] z-0" />
 
@@ -131,7 +157,7 @@ export default function App() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="w-full flex flex-col items-center justify-center"
+                className="w-full flex flex-col items-center justify-center cursor-default"
               >
                 <h1 className="font-script text-white text-5xl md:text-6xl text-center select-none tracking-wide drop-shadow-[0_2px_15px_rgba(251,113,133,0.55)] leading-tight mb-1">
                   Happy Birthday!
@@ -142,7 +168,10 @@ export default function App() {
                 </p>
 
                 {/* THE MASSIVE CSS CAKE */}
-                <BirthdayCake onClick={() => setActiveScreen(ActiveScreen.GIFT)} />
+                <BirthdayCake
+                  onClick={() => setActiveScreen(ActiveScreen.GIFT)}
+                  shake={shakeCake}
+                />
 
                 {/* VISUAL GUIDE INSTRUCTION */}
                 <p className="mt-4 font-sans font-extrabold text-xs md:text-sm text-center text-rose-200/90 tracking-wide animate-pulse bg-rose-950/40 px-5 py-2 rounded-full border border-rose-800/30">
@@ -159,9 +188,12 @@ export default function App() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="w-full flex flex-col items-center justify-center"
+                className="w-full flex flex-col items-center justify-center cursor-default"
               >
-                <GiftBox onOpenComplete={() => setActiveScreen(ActiveScreen.CARD)} />
+                <GiftBox
+                  onOpenComplete={() => setActiveScreen(ActiveScreen.CARD)}
+                  shake={shakeBox}
+                />
               </motion.div>
             )}
 
