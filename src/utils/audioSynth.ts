@@ -15,6 +15,43 @@ function getAudioContext(): AudioContext {
   return audioCtx;
 }
 
+// Bulletproof audio unlocker for Android, iOS (iPhone/iPad), macOS, Windows, etc.
+if (typeof window !== "undefined") {
+  const unlock = () => {
+    try {
+      const ctx = getAudioContext();
+      if (ctx) {
+        // Create and play a 1-millisecond silent buffer to wake up browser's audio hardware
+        const buffer = ctx.createBuffer(1, 1, 22050);
+        const source = ctx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(ctx.destination);
+        source.start(0);
+
+        // Resume AudioContext if suspended
+        if (ctx.state === "suspended") {
+          ctx.resume();
+        }
+
+        // Once successfully running, clean up all unlock event listeners
+        if (ctx.state === "running") {
+          window.removeEventListener("click", unlock, true);
+          window.removeEventListener("touchstart", unlock, true);
+          window.removeEventListener("touchend", unlock, true);
+        }
+      }
+    } catch (e) {
+      console.warn("Failed to unlock audio context:", e);
+    }
+  };
+
+  // Bind to native user gesture events in the capture phase (true)
+  // This guarantees context is unlocked BEFORE React synthetic click handlers run
+  window.addEventListener("click", unlock, true);
+  window.addEventListener("touchstart", unlock, true);
+  window.addEventListener("touchend", unlock, true);
+}
+
 /**
  * Synthesizes a soft blowing wind sound for extinguishing candles
  */
